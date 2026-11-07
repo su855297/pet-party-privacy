@@ -15,13 +15,20 @@
   var s = (q.get('s') || 'other').slice(0, 20), p = (q.get('p') || '').slice(0, 40);
   var PLAY = 'https://play.google.com/store/apps/details?id=com.petparty.game&referrer=' +
     encodeURIComponent('utm_source=' + s + '&utm_medium=social&utm_campaign=' + p);
+  // 網頁試玩(MergeAnimals docs/功能/網頁試玩模式.md)：有 demo=遊戲 key 就改跳 ../play/ 試玩網頁(帶 demo、src、lv、s、p)，不是 Play
+  var demo = (q.get('demo') || '').replace(/[^A-Za-z0-9]/g, '').slice(0, 30);
+  if (demo) {
+    var dq = new URLSearchParams({ demo: demo, src: (q.get('src') || s + '_' + p).slice(0, 40), s: s, p: p });
+    if (q.get('lv')) dq.set('lv', q.get('lv').slice(0, 4));
+    PLAY = '../play/?' + dq.toString();
+  }
   var gone = false;
   function go() { if (!gone) { gone = true; location.replace(PLAY); } }
   window.dataLayer = window.dataLayer || [];
   function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
   gtag('config', GA_ID, { send_page_view: false });
-  gtag('event', 'page_view', { link_source: s, link_post: p, event_callback: go });
+  gtag('event', 'page_view', { link_source: s, link_post: p, link_demo: demo, event_callback: go });
   setTimeout(go, 1500);   // GA4 載不到(擋廣告)也照樣跳
   document.write('<script async src="https://www.googletagmanager.com/gtag/js?id=' + GA_ID + '"><\/script>');
 </script>
