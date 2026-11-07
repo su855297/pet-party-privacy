@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>萌寵派對 社群成效</title>
+<style>
+  :root { --bg:#fffaf2; --card:#fff; --ink:#3a2a1e; --mute:#8a7563; --line:#ead9c4; --up:#1f8a4c; --fb:#1877f2; --ig:#d62976; --th:#222; --yt:#e00; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#1b1612; --card:#26201b; --ink:#f1e6d8; --mute:#a8927d; --line:#3d332a; --up:#4fc27f; --th:#ddd; } }
+  :root[data-theme="dark"] { --bg:#1b1612; --card:#26201b; --ink:#f1e6d8; --mute:#a8927d; --line:#3d332a; --up:#4fc27f; --th:#ddd; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:system-ui,"Microsoft JhengHei",sans-serif; }
+  main { max-width:1100px; margin:0 auto; padding:20px 16px 60px; }
+  h1 { font-size:24px; margin:0 0 4px; } .sub { color:var(--mute); font-size:14px; margin-bottom:18px; }
+  h2 { font-size:17px; margin:28px 0 10px; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; }
+  .card .p { font-weight:700; font-size:14px; } .card .n { font-size:30px; font-weight:800; margin:4px 0; font-variant-numeric:tabular-nums; }
+  .card .d { font-size:13px; color:var(--mute); } .up { color:var(--up); font-weight:700; }
+  .facebook { --c:var(--fb); } .instagram { --c:var(--ig); } .threads { --c:var(--th); } .youtube { --c:var(--yt); }
+  .card .p, td.plat { color:var(--c); }
+  .chart { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px; }
+  .chart svg { width:100%; height:auto; display:block; } .legend { display:flex; gap:16px; flex-wrap:wrap; font-size:13px; margin-top:6px; }
+  .legend span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:2px; background:var(--c); margin-right:5px; }
+  .tablewrap { overflow-x:auto; background:var(--card); border:1px solid var(--line); border-radius:12px; }
+  table { border-collapse:collapse; width:100%; font-size:13px; min-width:760px; }
+  th, td { padding:8px 10px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums; }
+  th { color:var(--mute); font-weight:600; background:var(--card); position:sticky; top:0; }
+  td.t, th.t { text-align:left; white-space:normal; min-width:220px; } td.t a { color:inherit; }
+  td.plat, th.plat { text-align:left; font-weight:700; } .k { font-size:12px; color:var(--mute); }
+  .note { color:var(--mute); font-size:12px; margin-top:8px; line-height:1.6; }
+  select { font:inherit; padding:4px 8px; border-radius:8px; border:1px solid var(--line); background:var(--card); color:var(--ink); }
+</style>
+</head>
+<body>
+<main>
+  <h1>萌寵派對 社群成效</h1>
+  <div class="sub" id="sub"></div>
+  <div class="cards" id="cards"></div>
+  <h2>每天的總觀看（累積）</h2>
+  <div class="chart"><svg id="chart" viewBox="0 0 1000 260"></svg><div class="legend" id="legend"></div></div>
+  <h2>每篇貼文 <select id="day"></select></h2>
+  <div class="tablewrap"><table id="tbl"></table></div>
+  <div class="note" id="note"></div>
+</main>
+<script>
+const DATA = [{"date":"2026-11-06","at":"2026-11-06T02:00:44.149Z","posts":[{"platform":"facebook","id":"1316104534929057_122101756269536156","time":"2026-11-05T11:32:09+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.facebook.com/reel/1117112747978100/","m":{"views":315,"reach":296,"clicks":0,"plays":288,"avgWatchMs":1818,"likes":0,"comments":0,"shares":0}},{"platform":"facebook","id":"1316104534929057_122100531105536156","time":"2026-11-04T02:45:10+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.facebook.com/122100581793536156/posts/122100531105536156","m":{"views":4,"reach":2,"clicks":0,"likes":0,"comments":0,"shares":0}},{"platform":"instagram","id":"18055652270807363","time":"2026-11-05T11:32:36+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.instagram.com/reel/DfW7nvAiZTE/","m":{"reach":37,"views":40,"saves":0,"shares":0,"avgWatchMs":2721,"likes":0,"comments":0}},{"platform":"instagram","id":"18289706971295681","time":"2026-11-04T02:28:58+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.instagram.com/p/DfTYpP6k6Ho/","m":{"reach":0,"views":1,"saves":0,"shares":0,"likes":0,"comments":0}},{"platform":"threads","id":"18157434241525518","time":"2026-11-05T11:49:47+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.threads.com/@petparty.game/post/DfW9lvxyD-L","m":{"views":6,"likes":0,"comments":0,"reposts":0,"quotes":0,"shares":0}},{"platform":"threads","id":"18119149436008793","time":"2026-11-04T03:34:01+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.threads.com/@petparty.game/post/DfTgFsrncVg","m":{"views":17,"likes":0,"comments":0,"reposts":0,"quotes":0,"shares":0}},{"platform":"youtube","id":"Y7AFbcoeITE","time":"2026-11-05T12:04:50Z","title":"困難關！你能全部排好嗎？🧪 #Shorts #倒水遊戲","kind":"video","url":"https://youtube.com/shorts/Y7AFbcoeITE","m":{"views":48,"likes":0,"comments":0}}],"errors":{},"youtubeChannel":{"subscribers":0,"views":0},"missing":[]},{"date":"2026-11-07","at":"2026-11-07T02:12:39.853Z","posts":[{"platform":"facebook","id":"1316104534929057_122102960865536156","time":"2026-11-06T19:13:21+0000","title":"一樣的動物碰在一起，就會變成更大的動物 🐣➡️🐷➡️🐼","kind":"image","url":"https://www.facebook.com/122100581793536156/posts/122102960865536156","m":{"views":0,"reach":0,"clicks":0,"likes":0,"comments":0,"shares":0,"installs":0,"opens":0}},{"platform":"facebook","id":"1316104534929057_122101756269536156","time":"2026-11-05T11:32:09+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.facebook.com/reel/1117112747978100/","m":{"views":317,"reach":299,"clicks":0,"plays":290,"avgWatchMs":1810,"likes":0,"comments":0,"shares":0,"installs":0,"opens":0}},{"platform":"facebook","id":"1316104534929057_122100531105536156","time":"2026-11-04T02:45:10+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.facebook.com/122100581793536156/posts/122100531105536156","m":{"views":4,"reach":2,"clicks":0,"likes":0,"comments":0,"shares":0,"installs":0,"opens":0}},{"platform":"instagram","id":"17940519771400019","time":"2026-11-06T19:13:34+0000","title":"一樣的動物碰在一起，就會變成更大的動物 🐣➡️🐷➡️🐼","kind":"image","url":"https://www.instagram.com/p/DfaVNAKE7B6/","m":{"reach":0,"views":0,"saves":0,"shares":0,"likes":0,"comments":0}},{"platform":"instagram","id":"18055652270807363","time":"2026-11-05T11:32:36+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.instagram.com/reel/DfW7nvAiZTE/","m":{"reach":51,"views":53,"saves":0,"shares":0,"avgWatchMs":3080,"likes":0,"comments":0}},{"platform":"instagram","id":"18289706971295681","time":"2026-11-04T02:28:58+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.instagram.com/p/DfTYpP6k6Ho/","m":{"reach":0,"views":1,"saves":0,"shares":0,"likes":0,"comments":0}},{"platform":"threads","id":"18362848180217743","time":"2026-11-06T19:13:47+0000","title":"一樣的動物碰在一起，就會變成更大的動物 🐣➡️🐷➡️🐼","kind":"image","url":"https://www.threads.com/@petparty.game/post/DfaVOd_GcWo","m":{"views":0,"likes":0,"comments":0,"reposts":0,"quotes":0,"shares":0,"installs":0,"opens":0}},{"platform":"threads","id":"18157434241525518","time":"2026-11-05T11:49:47+0000","title":"困難關，看牠一瓶一瓶排好 🧪✨","kind":"video","url":"https://www.threads.com/@petparty.game/post/DfW9lvxyD-L","m":{"views":6,"likes":0,"comments":0,"reposts":0,"quotes":0,"shares":0,"installs":0,"opens":0}},{"platform":"threads","id":"18119149436008793","time":"2026-11-04T03:34:01+0000","title":"大家好！我們是萌寵派對 🐾","kind":"image","url":"https://www.threads.com/@petparty.game/post/DfTgFsrncVg","m":{"views":17,"likes":0,"comments":0,"reposts":0,"quotes":0,"shares":0,"installs":0,"opens":0}},{"platform":"youtube","id":"6rLlANdF9Yc","time":"2026-11-06T10:22:27Z","title":"停車場塞成這樣，你幾步開得出去？ #Shorts #停車場","kind":"video","url":"https://youtube.com/shorts/6rLlANdF9Yc","m":{"views":84,"likes":0,"comments":0,"installs":0,"opens":0}},{"platform":"youtube","id":"Y7AFbcoeITE","time":"2026-11-05T12:04:50Z","title":"困難關！你能全部排好嗎？🧪 #Shorts #倒水遊戲","kind":"video","url":"https://youtube.com/shorts/Y7AFbcoeITE","m":{"views":52,"likes":0,"comments":0}}],"errors":{},"youtubeChannel":{"subscribers":0,"views":51},"installSources":{"(direct)|(direct)":{"installs":18,"opens":39},"(not set)|(not set)":{"installs":10,"opens":22},"google-play|(not set)":{"installs":1,"opens":1}},"fromPosts":{"clicks":0,"installs":0},"missing":[]}];
+const PL = { facebook:'Facebook', instagram:'Instagram', threads:'Threads', youtube:'YouTube' };
+const fmt = (n) => n == null ? '—' : Number(n).toLocaleString('zh-TW');
+const views = (p) => p.m.views ?? p.m.plays ?? 0;
+const byId = (snap) => new Map((snap ? snap.posts : []).map((p) => [p.platform + p.id, p]));
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+const days = DATA || [];
+const last = days[days.length - 1], prev = days[days.length - 2];
+document.getElementById('sub').textContent = last ? `最後更新 ${new Date(last.at).toLocaleString('zh-TW')}・共 ${days.length} 天資料・數字是「累積到那天」` : '還沒有資料：跑 node tools/social/insights/collect.js';
+
+// 卡片：各平台總觀看＋比昨天多多少
+const tot = (snap, pl) => snap ? snap.posts.filter((p) => p.platform === pl).reduce((a, p) => a + views(p), 0) : 0;
+document.getElementById('cards').innerHTML = Object.keys(PL).map((pl) => {
+  const n = tot(last, pl), d = prev ? n - tot(prev, pl) : null;
+  const posts = last ? last.posts.filter((p) => p.platform === pl).length : 0;
+  const extra = pl === 'youtube' && last && last.youtubeChannel ? `・訂閱 ${fmt(last.youtubeChannel.subscribers)}` : '';
+  return `<div class="card ${pl}"><div class="p">${PL[pl]}</div><div class="n">${fmt(n)}</div><div class="d">總觀看・${posts} 篇${extra}${d != null ? `・<span class="up">比前一天 +${fmt(d)}</span>` : ''}</div></div>`;
+}).join('');
+
+// 折線圖
+(function chart() {
+  const svg = document.getElementById('chart'); if (!days.length) return;
+  const W = 1000, H = 260, L = 50, B = 30, T = 10, R = 10;
+  const series = Object.keys(PL).map((pl) => ({ pl, ys: days.map((s) => tot(s, pl)) }));
+  const max = Math.max(1, ...series.flatMap((s) => s.ys));
+  const x = (i) => L + (days.length === 1 ? (W - L - R) / 2 : i * (W - L - R) / (days.length - 1));
+  const y = (v) => H - B - v / max * (H - B - T);
+  let g = '';
+  for (let k = 0; k <= 4; k++) { const v = max * k / 4; g += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="var(--mute)">${fmt(Math.round(v))}</text>`; }
+  const step = Math.ceil(days.length / 10);
+  days.forEach((s, i) => { if (i % step === 0 || i === days.length - 1) g += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="var(--mute)">${s.date.slice(5)}</text>`; });
+  for (const s of series) {
+    const col = getComputedStyle(document.querySelector('.card.' + s.pl)).getPropertyValue('--c');
+    g += `<polyline fill="none" stroke="${col}" stroke-width="2.5" points="${s.ys.map((v, i) => x(i) + ',' + y(v)).join(' ')}"/>`;
+    s.ys.forEach((v, i) => { g += `<circle cx="${x(i)}" cy="${y(v)}" r="3.5" fill="${col}"><title>${PL[s.pl]} ${days[i].date}：${fmt(v)}</title></circle>`; });
+  }
+  svg.innerHTML = g;
+  document.getElementById('legend').innerHTML = Object.keys(PL).map((pl) => `<span class="${pl}">${PL[pl]}</span>`).join('');
+})();
+
+// 表格：選一天，跟前一天比
+const sel = document.getElementById('day');
+sel.innerHTML = days.map((s, i) => `<option value="${i}">${s.date}</option>`).reverse().join('');
+function table(i) {
+  const s = days[i], before = byId(days[i - 1]);
+  const cols = [['views', '觀看'], ['reach', '觸及'], ['likes', '讚'], ['comments', '留言'], ['shares', '分享'], ['saves', '收藏'], ['avgWatchMs', '平均看(秒)'], ['linkClicks', '點連結'], ['installs', '帶來新玩家'], ['opens', '打開次數']];
+  const rows = s.posts.slice().sort((a, b) => b.time.localeCompare(a.time) || a.platform.localeCompare(b.platform));
+  const cell = (p, k) => {
+    let v = k === 'views' ? (p.m.views ?? p.m.plays) : p.m[k];
+    if (v == null) return '<td>—</td>';
+    if (k === 'avgWatchMs') return `<td>${(v / 1000).toFixed(1)}</td>`;
+    const o = before.get(p.platform + p.id); const ov = o ? (k === 'views' ? (o.m.views ?? o.m.plays) : o.m[k]) : null;
+    const d = ov != null && v > ov ? ` <span class="up">+${fmt(v - ov)}</span>` : '';
+    return `<td>${fmt(v)}${d}</td>`;
+  };
+  document.getElementById('tbl').innerHTML = `<tr><th class="plat">平台</th><th class="t">貼文</th><th>發文</th>${cols.map((c) => `<th>${c[1]}</th>`).join('')}</tr>` +
+    rows.map((p) => `<tr class="${p.platform}"><td class="plat">${PL[p.platform]}</td><td class="t"><a href="${esc(p.url || '#')}" target="_blank">${esc(p.title)}</a> <span class="k">${p.kind === 'video' ? '🎬 影片' : '🖼 圖片'}</span></td><td>${new Date(p.time).toLocaleDateString('zh-TW', { month:'numeric', day:'numeric' })}</td>${cols.map((c) => cell(p, c[0])).join('')}</tr>`).join('');
+  const notes = [];
+  if (Object.keys(s.errors || {}).length) notes.push('這天有平台讀取失敗：' + esc(JSON.stringify(s.errors)));
+  if ((s.missing || []).length) notes.push('讀不到的指標：' + s.missing.map(esc).join('；'));
+  notes.push('觀看：FB＝貼文媒體觀看（影片另有播放次數）、IG＝views、Threads＝views、YouTube＝viewCount。觸及＝看過的不重複人數。綠色＝比前一天多。');
+  notes.push('點連結＝貼文裡的連結被點幾次（11/07 起的貼文才有）。帶來新玩家＝點這篇連結後裝了遊戲的人數；打開次數＝這些玩家總共開了幾次遊戲。IG 的連結不能點，所以是「—」。看了貼文但自己去 Play 搜尋下載的，算不到是哪篇。');
+  document.getElementById('note').innerHTML = notes.join('<br>');
+}
+sel.onchange = () => table(+sel.value);
+if (days.length) table(days.length - 1);
+</script>
+</body>
+</html>
