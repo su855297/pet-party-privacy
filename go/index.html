@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>萌寵派對 Pet Party</title>
+<meta property="og:title" content="萌寵派對 Pet Party｜Google Play 免費下載">
+<meta property="og:description" content="16 款動物小遊戲：倒水、停車場、疊疊消、轉螺絲…">
+<!-- 社群貼文的連結先到這裡：記一次「點連結」(GA4，網址的 s=平台 p=哪一篇)，再跳 Google Play。
+     MergeAnimals repo 的 tools/social/run.js 產生連結、tools/social/insights/collect.js 讀點擊數。 -->
+<script>
+  var GA_ID = 'G-NDLX9BKDSP';
+  var q = new URLSearchParams(location.search);
+  var s = (q.get('s') || 'other').slice(0, 20), p = (q.get('p') || '').slice(0, 40);
+  var PLAY = 'https://play.google.com/store/apps/details?id=com.petparty.game&referrer=' +
+    encodeURIComponent('utm_source=' + s + '&utm_medium=social&utm_campaign=' + p);
+  var gone = false;
+  function go() { if (!gone) { gone = true; location.replace(PLAY); } }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', GA_ID, { send_page_view: false });
+  gtag('event', 'page_view', { link_source: s, link_post: p, event_callback: go });
+  setTimeout(go, 1500);   // GA4 載不到(擋廣告)也照樣跳
+  document.write('<script async src="https://www.googletagmanager.com/gtag/js?id=' + GA_ID + '"><\/script>');
+</script>
+<style>body{font-family:sans-serif;text-align:center;padding:40px 16px;background:#fff8ee;color:#6b3410}a{color:#e8701a;font-size:20px}</style>
+</head>
+<body>
+<p>正在前往 Google Play…</p>
+<p><a id="l" href="https://play.google.com/store/apps/details?id=com.petparty.game">沒有自動跳轉，請點這裡</a></p>
+<script>document.getElementById('l').href = PLAY;</script>
+</body>
+</html>
