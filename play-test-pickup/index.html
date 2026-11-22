@@ -57,7 +57,7 @@
 <script src="src/import-map.36717.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    System.import('./index.b07f3.js').catch(function(err) { console.error(err); })
+    System.import('./index.c5647.js').catch(function(err) { console.error(err); })
 </script>
 
 <script>
@@ -77,8 +77,8 @@
       var c = find(cc.director.getScene()); if (!c || !c.ready || !c.state) return;
       if (big && !bigLv) return;
       clearInterval(t);
-      if (look === 'A' || look === 'B') c.garageLook = look;
-      if (big) c.debugLayoutLevel(bigLv, 96, c.garageLook); else c.debugLevel(lv || (c.levelIndex + 1));
+      
+      if (big) c.debugLayoutLevel(bigLv, 96); else c.debugLevel(lv || (c.levelIndex + 1));
     } catch (e) {}
   }, 500);
 })();
