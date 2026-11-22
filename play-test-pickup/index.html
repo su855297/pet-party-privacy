@@ -57,8 +57,31 @@
 <script src="src/import-map.36717.json" type="systemjs-importmap" charset="utf-8"> </script>
 
 <script>
-    System.import('./index.ae675.js').catch(function(err) { console.error(err); })
+    System.import('./index.b07f3.js').catch(function(err) { console.error(err); })
 </script>
 
+<script>
+/* 試玩用：網址 ?lv=N 直接跳萌寵接送第 N 關；?garage=A|B 換車庫樣子；?big=1 開 10x8 大停車場試做。只在 play-test-pickup，不進遊戲程式 */
+(function () {
+  var q = new URLSearchParams(location.search);
+  var lv = parseInt(q.get('lv') || '0', 10), look = q.get('garage'), big = q.get('big') === '1';
+  if (!lv && !look && !big) return;
+  var bigLv = null;
+  if (big) fetch('pu_big.json').then(function (r) { return r.json(); }).then(function (j) { bigLv = j.w10x8; });
+  var tries = 0;
+  var t = setInterval(function () {
+    if (++tries > 240) return clearInterval(t);
+    try {
+      var cc = window.cc; if (!cc || !cc.director || !cc.director.getScene()) return;
+      var find = function (n) { var c = n.getComponent && n.getComponent('PetPickup'); if (c) return c; for (var i = 0; i < n.children.length; i++) { var r = find(n.children[i]); if (r) return r; } return null; };
+      var c = find(cc.director.getScene()); if (!c || !c.ready || !c.state) return;
+      if (big && !bigLv) return;
+      clearInterval(t);
+      if (look === 'A' || look === 'B') c.garageLook = look;
+      if (big) c.debugLayoutLevel(bigLv, 96, c.garageLook); else c.debugLevel(lv || (c.levelIndex + 1));
+    } catch (e) {}
+  }, 500);
+})();
+</script>
 </body>
 </html>
